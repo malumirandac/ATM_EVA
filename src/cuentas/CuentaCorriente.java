@@ -1,29 +1,36 @@
 package cuentas;
 
 //hola profe, aquí mi codigo :)
-//utilicé el metodo main dentro de la misma clase, no a parte para tener el codigo en un mismo lugar
+
+import java.lang.management.MonitorInfo;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CuentaCorriente {
-        //atributos
+        //ATRIBUTOS
         private String titular;
         private int numero;
         private int saldo;
+        private List<Movimientos> movimientos; // array para almacenar movimientos
 
-        //constructores
+        //CONSTRUCTORES
         //constructor con titular y numero obligatorio
         public CuentaCorriente(String titular, int numero){
             this.titular = titular;
             this.numero = numero;
             this.saldo = 0;
+            this.movimientos = new ArrayList<>();
         }
         //constructor con todos los atributos
         public CuentaCorriente(String titular, int numero, int saldo){
             this.titular = titular;
             this.numero = numero;
             this.saldo = saldo;
+            this.movimientos = new ArrayList<>();
         }
 
-        //Getters y setters
+        //GETTERS Y SETTERS
         public String getTitular(){
             return titular;
         }
@@ -44,14 +51,18 @@ public class CuentaCorriente {
             return saldo;
         }
 
-        public void setSaldo(int saldo){
+        //cambiamos a private para que solo se pueda modificar mediante abonar y cargar
+        private void setSaldo(int saldo){
             this.saldo = saldo;
         }
 
+        //METODOS
         //Metodo para abonar
         public void abonar(int monto){
             if (monto >= 0){
                 this.saldo += monto;
+                agregarMovimiento(new Movimientos("Abono", monto));
+                //se agrega el movimiento a la lista
             } else{
                 System.out.println("***EL MONTO A ABONAR NO PUEDE SER NEGATIVO***");
             }
@@ -64,12 +75,28 @@ public class CuentaCorriente {
                 if (this.saldo < 0) {
                     this.saldo = 0;
                 }
+                agregarMovimiento(new Movimientos("Cargo", monto));
+                //se agrega el movimiento a la lista
             }else{
-                System.out.println("***EL MONTO A ABONAR NO PUEDE SER NEGATIVO***");
+                System.out.println("***EL MONTO A CARGAR NO PUEDE SER NEGATIVO***");
             }
         }
 
-        //Sobrecarga metodo toString
+        //Metodo para agregar movimientos con condicional ultimos 10
+        private void agregarMovimiento(Movimientos movimiento){
+            if (movimientos.size() == 10){
+                movimientos.remove(0);
+            }
+            movimientos.add(movimiento);
+        }
+
+        //Metodo para mostrar movimientos
+        public List<Movimientos> getMovimientos(){
+            return movimientos;
+        }
+
+
+        //SOBRECARGA TO STRING
         @Override
         public String toString(){
             return "LOS DATOS DE LA CUENTA SON: " +
