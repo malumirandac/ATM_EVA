@@ -1,24 +1,25 @@
 package cuentas;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Movimientos {
 
     //ATRIBUTOS
-    //contendra atirbutos del tipo "movimiento" abono o cargo mas la fecha que se realizo el movimiento
+    //contendra atirbutos del tipo "movimiento" abono o cargo mas la fecha y hora que se realizo el movimiento
     private String tipoMovimiento;
     private int monto;
-    private LocalDate fechaMovimiento;
+    private LocalDateTime fechaHoraMovimiento;
 
     //CONSTRUCTORES
-    public Movimientos(String tipoMovimiento, int monto, LocalDate fechaMovimiento){
+    public Movimientos(String tipoMovimiento, int monto, LocalDateTime fechaHoraMovimiento){
         this.tipoMovimiento = tipoMovimiento;
         this.monto = monto;
-        this.fechaMovimiento = fechaMovimiento;
+        this.fechaHoraMovimiento = fechaHoraMovimiento;
     }
 
     public Movimientos(String tipoMovimiento, int monto) {
-        this(tipoMovimiento, monto, LocalDate.now());
+        this(tipoMovimiento, monto, LocalDateTime.now());
     }
 
     //GETTERS Y SETTERS
@@ -38,19 +39,20 @@ public class Movimientos {
         this.monto = monto;
     }
 
-    public LocalDate getFechaMovimiento() {
-        return fechaMovimiento;
+    public LocalDateTime getFechaHoraMovimiento() {
+        return fechaHoraMovimiento;
     }
 
-    public void setFechaMovimiento(LocalDate fechaMovimiento) {
-        this.fechaMovimiento = fechaMovimiento;
+    public void setFechaHoraMovimiento(LocalDateTime fechaHoraMovimiento) {
+        this.fechaHoraMovimiento = fechaHoraMovimiento;
     }
 
     //SOBRECARGA TO STRING
     @Override
     public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return "Movimiento = " + tipoMovimiento +
                 ", Monto: $" + monto +
-                ", Fecha: " + fechaMovimiento;
+                ", Fecha y Hora: " + fechaHoraMovimiento.format(formatter);
     }
 }

@@ -1,9 +1,5 @@
 package cuentas;
 
-//hola profe, aquí mi codigo :)
-
-import java.lang.management.MonitorInfo;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
